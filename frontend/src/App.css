@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+}
+
+.img-div {
+  position: relative;
+  display: inline-block;
+}
+
+.img-div .top-text {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.img-div .bottom-text {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  padding: 0;
+  margin: 5px;
+  width: 100%;
+}
