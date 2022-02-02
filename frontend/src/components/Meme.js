@@ -1,13 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Image, Transformation } from "cloudinary-react";
 
 //Components
-import { generateImage } from "../api/api";
+// import { generateImage } from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { DetailsContext } from "../context/DetailsProvider";
 
 const Meme = ({ imagePath }) => {
   const [doodle, setDoodle] = useState(false);
   const [top, setTop] = useState("");
   const [bottom, setBottom] = useState("");
+  const [color, setColor] = useState("white");
+  const { setDetails } = useContext(DetailsContext);
 
   useEffect(() => {
     setDoodle(false);
@@ -15,9 +19,21 @@ const Meme = ({ imagePath }) => {
     setBottom("");
   }, [imagePath]);
 
-  const imageGenerate = () => {
-    // setDoodle(false);
-    generateImage({ path: imagePath, topText: top, bottomText: bottom });
+  // const imageGenerate = () => {
+  //   // setDoodle(false);
+  //   generateImage({ path: imagePath, topText: top, bottomText: bottom });
+  // };
+
+  const navigate = useNavigate();
+  const routeChange = () => {
+    setDetails({
+      path: imagePath,
+      topText: top,
+      bottomText: bottom,
+      color: color.toUpperCase(),
+    });
+    let path = "/generate";
+    navigate(path);
   };
 
   return (
@@ -25,23 +41,21 @@ const Meme = ({ imagePath }) => {
       <div>
         <div className="img-div">
           <Image cloudName="triden47" publicId={imagePath}>
-            <Transformation crop="scale" width="700" />
+            <Transformation crop="scale" width="400" />
           </Image>
-          <h1 className="top-text">{top}</h1>
-          <h1 className="bottom-text">{bottom}</h1>
+          <h1 className="top-text" style={{ color: color }}>
+            {top}
+          </h1>
+          <h1 className="bottom-text" style={{ color: color }}>
+            {bottom}
+          </h1>
         </div>
       </div>
 
       {!doodle ? (
         <button onClick={() => setDoodle(true)}>Let's go with it</button>
       ) : (
-        <button
-          onClick={() => {
-            imageGenerate();
-          }}
-        >
-          Generate the meme
-        </button>
+        <button onClick={routeChange}>Generate the meme</button>
       )}
       {doodle && (
         <div>
@@ -57,6 +71,13 @@ const Meme = ({ imagePath }) => {
             value={bottom}
             onInput={(e) => setBottom(e.target.value)}
           />
+          <button
+            onClick={() => {
+              color === "white" ? setColor("black") : setColor("white");
+            }}
+          >
+            Text Color!
+          </button>
         </div>
       )}
     </div>
