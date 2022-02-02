@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { Image, Transformation } from "cloudinary-react";
 
 //Components
-// import { generateImage } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { DetailsContext } from "../context/DetailsProvider";
 
@@ -18,11 +17,6 @@ const Meme = ({ imagePath }) => {
     setTop("");
     setBottom("");
   }, [imagePath]);
-
-  // const imageGenerate = () => {
-  //   // setDoodle(false);
-  //   generateImage({ path: imagePath, topText: top, bottomText: bottom });
-  // };
 
   const navigate = useNavigate();
   const routeChange = () => {
@@ -55,7 +49,7 @@ const Meme = ({ imagePath }) => {
       {!doodle ? (
         <button onClick={() => setDoodle(true)}>Let's go with it</button>
       ) : (
-        <button onClick={routeChange}>Generate the meme</button>
+        <button style={{ padding: "20px" }}onClick={routeChange}>Generate the meme</button>
       )}
       {doodle && (
         <div>
@@ -65,19 +59,19 @@ const Meme = ({ imagePath }) => {
             value={top}
             onInput={(e) => setTop(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="Enter bottom text"
-            value={bottom}
-            onInput={(e) => setBottom(e.target.value)}
-          />
-          <button
-            onClick={() => {
-              color === "white" ? setColor("black") : setColor("white");
-            }}
-          >
-            Text Color!
-          </button>
+            <input
+              type="text"
+              placeholder="Enter bottom text"
+              value={bottom}
+              onInput={(e) => setBottom(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                color === "white" ? setColor("black") : setColor("white");
+              }}
+            >
+              Text Color!
+            </button>
         </div>
       )}
     </div>

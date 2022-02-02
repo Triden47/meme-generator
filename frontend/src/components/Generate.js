@@ -1,17 +1,14 @@
 import { useState, useEffect, useContext } from "react";
-import { generateImage } from "../api/api";
-import { Image, Transformation } from 'cloudinary-react';
+import { Image } from "cloudinary-react";
+
+//Components
 import { DetailsContext } from "../context/DetailsProvider";
+import { generateImage } from "../api/api";
+import Share from "./Share";
 
 const Generate = () => {
   const [imagePath, setImagePath] = useState();
-
-  // const [loading, setLoading] = useState(false);
   const { details } = useContext(DetailsContext);
-
-  useEffect(() => {
-    console.log(imagePath);
-  }, []);
 
   useEffect(() => {
     const getImagePath = async () => {
@@ -25,9 +22,18 @@ const Generate = () => {
   return (
     <div>
       {imagePath && (
-        <Image cloudName="triden47" publicId={imagePath}>
-          {/* <Transformation crop="scale" width="700" /> */}
-        </Image>
+        <div>
+          <div className="generated-img">
+            <Image cloudName="triden47" publicId={imagePath}>
+              {/* <Transformation crop="scale" width="700" /> */}
+            </Image>
+          </div>
+          <div>
+            <Share
+              imagePath={`https://res.cloudinary.com/triden47/image/upload/${imagePath}`}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

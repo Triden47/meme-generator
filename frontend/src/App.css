@@ -2,12 +2,16 @@
   text-align: center;
 }
 
-.img-div {
+body {
+  background-color: #121212;
+}
+
+#home .img-div {
   position: relative;
   display: inline-block;
 }
 
-.img-div .top-text {
+#home .img-div .top-text {
   position: absolute;
   top: 0;
   text-align: center;
@@ -16,11 +20,35 @@
   width: 100%;
 }
 
-.img-div .bottom-text {
+#home .img-div .bottom-text {
   position: absolute;
   bottom: 0;
   text-align: center;
   padding: 0;
   margin: 5px;
   width: 100%;
+}
+
+button {
+  color: #fff;
+  background-color: inherit;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  padding: 7.5px 20px;
+  margin: 20px 20px;
+  cursor: pointer;
+}
+
+input {
+  background-color: #212121;
+  color: #fff;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.generated-img {
+  margin-top: 200px;
 }

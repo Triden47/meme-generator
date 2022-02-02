@@ -15,7 +15,6 @@ cloudinary.config({
 });
 
 route.post("/api/images", jsonParser, async (req, res) => {
-  console.log(req.body);
   try {
     const id = "61f91233ecd214bef37c623b";
     const counter = (await Counter.findById(id, "__v")).toObject();
@@ -42,28 +41,22 @@ route.get("/images", async (req, res) => {
     const counter = (await Counter.findById(id, "__v")).toObject();
 
     const random = Math.floor(Math.random() * counter.__v);
-    console.log(random);
     const imageData = await Image.findOne({ number: random });
 
-    console.log(imageData);
     res.send({ imageData });
 
   } catch (error) {
-    console.log(error);
     res.status(500).json(error);
   }
 });
 
 route.post("/api/generate", jsonParser, async (req, res) => {
-  console.log(req.body);
   const obj = req.body;
   try {
     Jimp.read(
       `https://res.cloudinary.com/triden47/image/upload/w_400,c_scale/${obj.path}`
     )
       .then((image) => {
-        // console.log("yes");
-        // image.resize(500, 500); // resize
         Jimp.loadFont(
           obj.color === "WHITE"
             ? Jimp.FONT_SANS_32_WHITE
@@ -94,12 +87,10 @@ route.post("/api/generate", jsonParser, async (req, res) => {
             image.bitmap.width,
             image.bitmap.height
           );
-          image.write("images/result3.png", () => {
+          image.write("images/result.png", () => {
             cloudinary.uploader.upload(
-              "images/result3.png",
+              "images/result.png",
               (error, result) => {
-                console.log(result);
-                console.log(error);
                 res.status(200).json({ result });
               }
             );
@@ -107,10 +98,9 @@ route.post("/api/generate", jsonParser, async (req, res) => {
         });
       })
       .catch((err) => {
-        console.log("Image not available");
+        res.status(500),json(error);
       });
   } catch (error) {
-    console.log("Error");
     res.status(500).json(error);
   }
 });
